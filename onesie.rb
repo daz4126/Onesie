@@ -53,8 +53,8 @@ get '/' do
   markdown :README
 end
 
-get '/:post' do
-  markdown params[:post].to_sym
+get '/:page' do
+  markdown params[:page].to_sym
 end
 
 ###########  Tests ###########
@@ -84,6 +84,11 @@ __END__
 ########### Views ###########
 
 # put your own views here
+
+@@test
+This is a test page
+--------------------
+Testing, testing 1,2,3
 
 @@layout
 doctype html
@@ -120,7 +125,7 @@ html
   -if admin?
     a.admin href='/logout' logout
   -else
-    a.admin href='/admin' login
+    a.admin href='/admin' login (the password is secret)
       
 @@login
 form action="/login" method="post"
@@ -160,6 +165,7 @@ h1{font-size:2.4em;}h2{font-size:2em;}h3{font-size:1.6em;}
 h4{font-size:1.4em;}h5{font-size:1.2em;}h6{font-size:1em;}
 p{font-size:1em;line-height:1.6;margin:0 0 1em}
 small{font-size:90%;}
+ul,ol{padding:0 2em;}
 li{font-size:1em;line-height:1.6;}
 
 
