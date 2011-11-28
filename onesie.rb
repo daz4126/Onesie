@@ -1,6 +1,5 @@
 ########### Onesie ###########
 # The All In One Sinatra Bootstrap!
-
 require 'bundler'
 Bundler.require
 
@@ -48,11 +47,12 @@ get('/application.js') { coffee :script }
 
 # home page
 get '/' do
-  @title = 'Onesie: The All In One Sinatra Bootstrap!'
+  @title = 'The All In One Sinatra Bootstrap!'
   slim :index
 end
 
 ###########  Tests ###########
+# run tests with $> onesie.rb -test
 if ARGV.include? 'test'
   set :environment, :test
   set :run, false
@@ -79,14 +79,19 @@ enable :inline_templates
 __END__
 ########### Views ###########
 @@index
-p Onesie is a tiny framework for Sinatra that has everything all in one file - models, views, routes and tests.
+p Onesie is a tiny bootstrap app for Sinatra that crams everything all in one file:
+ul
+  li models
+  li views
+  li routes
+  li tests
 
 @@layout
 doctype html
 html
   head
     meta charset="utf-8"
-    title= @title || settings.name
+    title= "#{settings.name}: #{@title}" || settings.name || "Untitled"
     link rel="shortcut icon" href="/fav.ico"
     - settings.js_libraries.each do |link|
       script src==link
@@ -98,7 +103,7 @@ html
   body
     header role="banner"
       h1.logo 
-        a title="home" href="/" = settings.name
+        a title="Home, Sweet Home" href="/" = settings.name
       - settings.flash.each do |key|
         - if flash[key]
           div class="alert-message #{key}" == flash[key]
