@@ -10,7 +10,9 @@ set :analytics, ENV['ANALYTICS'] || 'UA-XXXXXXXX-X'
 set :token, ENV['TOKEN'] || 'makethisrandomandhardtoremember'
 set :password, ENV['PASSWORD'] || 'secret'
 set :js_libraries, %w[ http://cdn.rightjs.org/right.js ]
-set :public_folder, Proc.new { root }
+set :public_folder, -> { root }
+set :views, -> { root }
+set :markdown, :layout_engine => :slim
 set :fonts, :"Ubuntu|Coming+Soon";
 set :flash, %w[notice error warning alert info]
 enable :sessions
@@ -48,7 +50,11 @@ get('/application.js') { coffee :script }
 # home page
 get '/' do
   @title = 'The All In One Sinatra Bootstrap!'
-  slim :index
+  markdown :README
+end
+
+get '/:post' do
+  markdown params[:post].to_sym
 end
 
 ###########  Tests ###########

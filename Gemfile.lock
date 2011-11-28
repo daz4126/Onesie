@@ -75,6 +75,7 @@ GEM
       rack
     rack-protection (1.1.4)
       rack
+    redcarpet (1.17.2)
     sass (3.1.10)
     sinatra (1.3.1)
       rack (~> 1.3, >= 1.3.4)
@@ -104,6 +105,7 @@ DEPENDENCIES
   dm-sqlite-adapter
   pg
   rack-flash
+  redcarpet
   sass
   sinatra
   slim
