@@ -1,4 +1,6 @@
-The Teeny, Tiny Framework
-===========================
+Onesie is a tiny bootstrap app for Sinatra that crams everything all in one file:
 
-Onesie is a tiny framework for Sinatra that has everything all in one file - models, views, routes and tests.
+* Models
+* Views
+* Routes
+* Tests

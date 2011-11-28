@@ -80,17 +80,10 @@ if ARGV.include? 'test'
     end
   end
 end
-
-enable :inline_templates
 __END__
 ########### Views ###########
-@@index
-p Onesie is a tiny bootstrap app for Sinatra that crams everything all in one file:
-ul
-  li models
-  li views
-  li routes
-  li tests
+
+# put your own views here
 
 @@layout
 doctype html
@@ -98,7 +91,7 @@ html
   head
     meta charset="utf-8"
     title= "#{settings.name}: #{@title}" || settings.name || "Untitled"
-    link rel="shortcut icon" href="/fav.ico"
+    link rel="shortcut icon" href="/favicon.ico"
     - settings.js_libraries.each do |link|
       script src==link
     script src="/application.js"
@@ -139,7 +132,7 @@ h1 404!
 p That page is missing
 
 @@script
-alert 'Welcome to Onesie. This is just to make sure that Coffeescript is working.'
+alert 'Coffeescript is working!'
 
 @@styles
 // fonts
