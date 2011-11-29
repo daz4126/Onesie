@@ -1,7 +1,10 @@
 ########### Onesie ###########
 # The All In One Sinatra Bootstrap!
-require 'bundler'
-Bundler.require
+#require 'bundler'
+#Bundler.require
+require "rubygems"
+require "bundler/setup"
+%w(sinatra slim sass redcarpet coffee-script v8 rack-flash).each{|l| require l}
 
 ########### settings ###########
 set :name, ENV['name'] || 'Onesie'
