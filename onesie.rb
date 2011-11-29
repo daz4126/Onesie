@@ -22,15 +22,15 @@ enable :sessions
 use Rack::Flash
 
 ########### configuration ###########
-configure :production do
-  set :scss, { :style => :compressed }
-  sha1, date = `git log HEAD~1..HEAD --pretty=format:%h^%ci`.strip.split('^') 
-  before do
-    cache_control :public, :must_revalidate, :max_age => 60*60*24*7
-    etag sha1
-    last_modified date
-  end
-end
+#configure :production do
+#  set :scss, { :style => :compressed }
+#  sha1, date = `git log HEAD~1..HEAD --pretty=format:%h^%ci`.strip.split('^') 
+#  before do
+#    cache_control :public, :must_revalidate, :max_age => 60*60*24*7
+#    etag sha1
+#    last_modified date
+#  end
+#end
 
 ########### Models ###########
 
