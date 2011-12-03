@@ -1,36 +1,29 @@
 ########### Onesie ###########
 # The All In One Sinatra Bootstrap!
-#require 'bundler'
-#Bundler.require
-require "rubygems"
-require "bundler/setup"
-%w(sinatra slim sass redcarpet coffee-script v8 rack-flash).each{|l| require l}
+require 'bundler'
+Bundler.require
 
-########### settings ###########
-set :name, ENV['name'] || 'Onesie'
-set :author, ENV['author'] || 'DAZ'
-set :analytics, ENV['ANALYTICS'] || 'UA-XXXXXXXX-X'
-set :token, ENV['TOKEN'] || 'makethisrandomandhardtoremember'
-set :password, ENV['PASSWORD'] || 'secret'
-set :js_libraries, %w[ http://cdn.rightjs.org/right.js ]
-set :public_folder, -> { root }
-set :views, -> { root }
-set :markdown, :layout_engine => :slim
-set :fonts, :"Ubuntu|Coming+Soon";
-set :flash, %w[notice error warning alert info]
-enable :sessions
-use Rack::Flash
+########### configuration & settings ###########
+configure do
+  set :name, ENV['name'] || 'Onesie'
+  set :author, ENV['author'] || 'DAZ'
+  set :analytics, ENV['ANALYTICS'] || 'UA-XXXXXXXX-X'
 
-########### configuration ###########
-#configure :production do
-#  set :scss, { :style => :compressed }
-#  sha1, date = `git log HEAD~1..HEAD --pretty=format:%h^%ci`.strip.split('^') 
-#  before do
-#    cache_control :public, :must_revalidate, :max_age => 60*60*24*7
-#    etag sha1
-#    last_modified date
-#  end
-#end
+  set :token, ENV['TOKEN'] || 'makethisrandomandhardtoremember'
+  set :password, ENV['PASSWORD'] || 'secret'
+
+  set :public_folder, -> { root }
+  set :views, -> { root }
+
+  set :js_libraries, %w[ http://cdn.rightjs.org/right.js ]
+  set :fonts, :"Ubuntu|Coming+Soon|Lemon";
+
+  set :markdown, :layout_engine => :slim
+
+  set :flash, %w[notice error warning alert info]
+  enable :sessions
+  use Rack::Flash
+end
 
 ########### Models ###########
 
@@ -41,13 +34,20 @@ helpers do
 	def admin? ; request.cookies[settings.author] == settings.token ; end
 	def protected! ; halt [ 401, 'Not authorized' ] unless admin? ; end
 end
+
 get('/admin'){ slim :login }
+
 post '/login' do
 	response.set_cookie(settings.author, settings.token) if params[:password] == settings.password
   flash[:notice]='You are now logged in'
 	redirect to('/')
 end
-get('/logout'){ response.set_cookie(settings.author, false) ;   flash[:notice]='You are now logged out'; redirect to('/') }
+
+get '/logout' do
+  response.set_cookie(settings.author, false)
+  flash[:notice]='You are now logged out'
+  redirect to('/')
+end
 
 ########### Helpers ###########
 helpers do
@@ -154,9 +154,10 @@ p That page is missing
 alert 'Coffeescript is working!'
 
 @@styles
+@import "reset";
 // fonts
 $normalfont: Ubuntu,Helvetica,Arial,sans-serif;
-$headingfont:'Coming Soon',sans-serif;
+$headingfont:'Lemon',sans-serif;
 $basefontsize: 13px;
 
 // colours
@@ -166,25 +167,17 @@ $background: #fff;
 $color: #666;
 $headingcolor: $blue;
 
-// reset
-html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote, pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt, dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article, aside, canvas, details,figcaption,figure,footer,header,hgroup,menu,nav,section, summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;line-height:1;}
-// html5 elements
-article,aside,canvas,details,figcaption,figure,
-footer,header,hgroup,menu,nav,section,summary{display:block;}
-body{font-family:$normalfont;background-color:$background;color:$color;}
-// standard stuff
-body{font-size:$basefontsize;}
+body{font-family:$normalfont;font-size:$basefontsize;background-color:$background;color:$color;}
 h1,h2,h3,h4,h5,h6{margin:0.2em 0;color:$headingcolor;font-family:$headingfont;}
-h1{font-size:2.4em;}h2{font-size:2em;}h3{font-size:1.6em;}
-h4{font-size:1.4em;}h5{font-size:1.2em;}h6{font-size:1em;}
-p{font-size:1em;line-height:1.6;margin:0 0 1em}
-small{font-size:90%;}
-ul,ol{padding:0 2em;}
-li{font-size:1em;line-height:1.6;}
-
 
 // custom styles
-.logo{font-size:4em;padding-left:64px;background: url(/logo.png) 0 0 no-repeat;line-height:64px;
-a{color:$green;text-decoration:none;}
+.logo{
+font-size:4em;padding-left:64px;
+background: url(/logo.png) 0 0 no-repeat;
+line-height:64px;
+a{
+  color:$green;text-decoration:none;
+  text-shadow: 1px 1px 1px $blue;
+}
 }
 .alert-message{padding:10px;border:3px solid $green;margin:1em;}
